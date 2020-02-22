@@ -1,0 +1,5 @@
+init 
+status
+add
+add -A
+commit
