@@ -1,0 +1,33 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <title>Usac Music: LogOut</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{% static 'styles/layout.css' %}" type="text/css">
+  <!--[if lt IE 9]><script src="{% static 'scripts/html5shiv.js' %}"></script><![endif]-->
+</head>
+
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <h1><a>LogOut</a></h1>
+    </div>
+  </header>
+</div>
+
+
+<!-- content -->
+<div class="wrapper row2">
+    <center>
+    <form method="POST">
+        {% csrf_token %}
+        <h1><a>Se cerro sesion correctamente</a></h1>
+      <input type="submit" value="Aceptar">
+    </form>
+    </center>
+</div>
+</body>
+</html>

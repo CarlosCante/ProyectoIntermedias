@@ -1,0 +1,39 @@
+{% extends 'BaseFormulario.html'%}
+
+{% block links %}
+
+<li><a href="/">Pagina Principal</a></li>
+<li class="last"><a href="/Login">Iniciar Sesion</a></li>
+
+{% endblock %}
+
+{% block titulo %}
+  <h1><a href="#">REGISTRO</a></h1>
+{% endblock %}
+
+{% block formulario %}
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  {% for field in form %}
+
+    <div class="field">
+      {{ field.label_tag }} </br>
+      {{ field }}
+
+      {% if field.errors %}
+        {% for error in field.errors %}
+        <p>
+          {{ field.errors }}
+        </p>
+        {% endfor %}
+      {% endif %}
+
+    </div>
+  {% endfor %}
+  
+  <p class="center-content">
+    <input type="submit" class="btn btn-green" value="Registrarse">
+  </p>
+</form>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <title>Usac Music: Registro</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{% static 'styles/layout.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'styles/form_style.css' %}">
+  <!--[if lt IE 9]><script src="{% static 'scripts/html5shiv.js' %}"></script><![endif]-->
+</head>
+
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+            {% block titulo %}
+            {% endblock %}
+    </div>
+    
+    <nav>
+        <ul>
+            {% block links %}
+            {% endblock %}
+        </ul>
+    </nav>
+
+  </header>
+</div>
+
+
+<!-- content -->
+<div class="wrapper row2">
+        {% block formulario %}
+        {% endblock %}
+</div>
+</body>
+</html>

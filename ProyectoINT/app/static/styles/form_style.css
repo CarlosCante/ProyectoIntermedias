@@ -1,0 +1,55 @@
+.btn{
+    border-radius: 15px;
+    display: inline-block;
+    margin: auto;
+    padding: 10px 15px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 orchid;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+    width: 425px;
+    font-size: 20px;
+}
+
+
+.btn-green{
+    color: white;
+    background-color: #3CC93F;
+}
+
+.btn-green:hover{
+    background-color: #37B839;
+}
+
+.btn-green:active{
+    background-color: #29962A;
+}
+
+
+
+body{
+    font-size: 18px;
+    font-family: Arial;
+    background-color: rgba(0,0,0,0.3);
+    box-sizing: border-box;  
+}
+
+form{
+    background-color: white;
+    padding: 10px;
+    margin: 0 auto;
+    width: 500px;
+}
+
+input{
+    border: 1;
+    outline: none;
+    width: 400px;
+    border-radius: 5px;
+}
+
+
+.field{
+    padding: 10px;
+}
+
+

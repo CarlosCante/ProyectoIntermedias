@@ -1,0 +1,99 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <title>SITIO DE VENTAS</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{% static 'styles/layout.css' %}" type="text/css">
+  <!--[if lt IE 9]><script src="{% static 'scripts/html5shiv.js' %}"></script><![endif]-->
+</head>
+
+
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <h1><a href="#">SITIO DE VENTAS</a></h1>
+    </div>
+
+
+    <!--Botones para registrarse e inciar sesion-->
+    <nav>
+      <ul>
+        <li><a href="RegistroUsuario">Registrarse</a></li>
+        <li class="last"><a href="Login">Iniciar Sesion</a></li>
+      </ul>
+    </nav>
+
+
+  </header>
+</div>
+
+
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+
+    <!-------------------------------Video de presentacion------------------------------------------->
+
+
+    <div id="full_width clear">
+      <section id="services" class="clear">
+              <div class="one_third">
+                  <article>
+                    <figcaption>
+                        <h2>Mision</h2>
+                        <p>
+                          Descripcion de la mision de la pagina
+                        </p>
+                    </figcaption>
+                  </article>
+                </div>
+              <div class="one_third">
+                <article>
+                  <figcaption>
+                      <h2>Vision</h2>
+                      <p>
+                        Descripcion de la vision de la pagina
+                      </p>
+                  </figcaption>
+                </article>
+              </div>
+              <div class="one_third last">
+                  <article>
+                    <figcaption>
+                        <h2>Acerca de</h2>
+                        <p>
+                          Informacion del desarrollador
+                        </p>
+                    </figcaption>
+                  </article>
+                </div>
+            </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="wrapper row3">
+  <div id="footer" class="clear">
+    <!-- Section One -->
+    <section class="one">
+      <h2 class="title">Contacto</h2>
+      <p>Correo: corre@mail.com</p>
+      <p>Telefon: 7777-7777</p>
+    </section>
+  </div>
+</div>
+
+
+<!-- Copyright -->
+<div class="wrapper row4">
+  <footer id="copyright" class="clear">
+    <p class="fl_left">Copyright &copy; 2018 - All Rights Reserved - <a href="#">Proyecto</a></p>
+  </footer>
+</div>
+</body>
+</html>

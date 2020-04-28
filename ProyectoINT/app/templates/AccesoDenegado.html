@@ -1,0 +1,53 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <title>Usac Music: Acceso denegado</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{% static 'styles/layout.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'styles/form_style.css' %}">
+  <!--[if lt IE 9]><script src="{% static 'scripts/html5shiv.js' %}"></script><![endif]-->
+</head>
+
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <h1><a>Acceso Denegado</a></h1>
+    </div>
+  </header>
+</div>
+
+
+<!-- content -->
+<div class="wrapper row2">
+    
+    <div align="center">
+        <img src="{% static 'images/advertencia.png' %}" width="100" height="100">
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <h1 align="center">
+          <a>
+            Usted no ha iniciado sesion
+          </a></br>
+          <a>
+            en el sistema o no tiene los
+          </a></br>
+          <a>
+            permisos nesesarios para acceder
+          </a></br>
+          <a>
+            a la pagina solicitada, porfavor
+          </a></br>
+          <a>
+            verifique su usuario y vuelva a intentarlo.
+          </a></br>
+        </h1>
+      <input type="submit" value="Aceptar" class="btn btn-green" align="center">
+    </form>
+</div>
+</body>
+</html>
