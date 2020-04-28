@@ -16,6 +16,17 @@ class Cliente(models.Model):
     direccion = models.CharField(max_length=150)
     sede = models.IntegerField()
 
+class Producto(models.Model):
+    sku = models.CharField(max_length=150,primary_key=True)
+    codigoBarras = models.CharField(max_length=150)
+    nombre = models.CharField(max_length=150)
+    descripcion = models.CharField(max_length=150)
+    precio = models.FloatField()
+    categoria = models.ManyToManyField('Categoria', db_column='id')
+
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=150)
+
 class Bodega(models.Model):
     id_bodega = models.BigIntegerField(primary_key=True)
     nombre = models.CharField(max_length=150)
@@ -23,6 +34,12 @@ class Bodega(models.Model):
     estado = models.CharField(max_length=150)
     encargado = models.ForeignKey('Usuario', db_column='dpi')
 
-
+class Sede(models.Model):
+    id_sede = models.BigIntegerField(primary_key=True)
+    alias = models.CharField(max_length=150)
+    direccion = models.CharField(max_length=150)
+    departamento = models.CharField(max_length=150)
+    municipio = models.CharField(max_length=150)
+    enargado = models.ForeignKey('Usuario', db_column='dpi')
 
 # Create your models here.
