@@ -45,12 +45,57 @@ def RegistroUsuario(request):
     return render(request, 'RegistroUsuario.html',{"form":form})
 
 
+def RegistroCliente(request):
+    
+    if request.method == "POST":
+        form = FormularioRegistroCliente(request.POST, request.FILES)
+
+        if form.is_valid():
+            DPI = form.cleaned_data.get('DPI')
+            NIT = form.cleaned_data.get('NIT')
+            Nombre = form.cleaned_data.get('Nombre')
+            Direccion = form.cleaned_data.get('Direccion')
+            Sede = form.cleaned_data.get('Sede')
+
+            print(NIT)
+            print(Direccion)
+            print(NIT)
+            usu = Cliente.objects.filter(dpi = DPI)
+            verificacion = usu.exists()
+
+            print(verificacion)
+            if verificacion == False:
+                print('asdf')
+                Cliente.objects.create(
+                    dpi = DPI,
+                    nombre = Nombre,
+                    nit = NIT,
+                    direccion = Direccion,
+                    sede = Sede
+                )
+                print('1asdf')
+                return redirect('ClienteCreado')
+            else:
+                return render(request, 'RegistroCliente.html',{"form":form})
+
+    else:
+        form = FormularioRegistroCliente()
+
+    return render(request, 'RegistroCliente.html',{"form":form})
+
 
 def UsuarioCreado(request):
     if request.method == "POST":
         return redirect('Login')
     else:
         return render(request, 'UsuarioCreado.html', {})
+
+
+def ClienteCreado(request):
+    if request.method == "POST":
+        return redirect('Login')
+    else:
+        return render(request, 'ClienteCreado.html', {})
 
 def Logout(request):
     request.session["Usuario"] = ""
