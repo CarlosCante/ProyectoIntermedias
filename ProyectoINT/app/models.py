@@ -6,7 +6,7 @@ class Usuario(models.Model):
     nombre = models.CharField(max_length=150)
     password = models.CharField(max_length=60)
     correo = models.CharField(max_length=150)
-    fecha_nacimiento = models.DateField()
+    fecha_nacimiento = models.DateField(null = True)
     encargado = models.CharField(max_length=3)
 
 class Cliente(models.Model):
@@ -14,6 +14,7 @@ class Cliente(models.Model):
     nombre = models.CharField(max_length=150)
     nit = models.CharField(max_length=60)
     direccion = models.CharField(max_length=150)
+    sede = models.IntegerField()
 
 class Bodega(models.Model):
     id_bodega = models.BigIntegerField(primary_key=True)

@@ -11,6 +11,13 @@ class FormularioRegistroUsuario(forms.Form):
     Fecha_Nacimiento = forms.DateField(required = True,input_formats = ["%d/%m/%Y"], label='Fecha de Nacimiento (DD/MM/YYYY)')
     password = forms.CharField(widget=forms.PasswordInput, label=_('Password'))
 
+class FormularioRegistroCliente(forms.Form):
+    DPI = forms.IntegerField(widget=forms.TextInput(),required = True)
+    Nombre = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
+    NIT = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
+    Direccion = forms.CharField(max_length=100, widget=forms.TextInput(),required = True)
+    Sede = forms.IntegerField(widget=forms.TextInput(),required = True)
+
 class FormularioLogin(forms.Form):
     Correo = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
     password = forms.CharField(widget=forms.PasswordInput, label=_('Password'), required = True)
