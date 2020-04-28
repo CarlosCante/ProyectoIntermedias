@@ -57,15 +57,10 @@ def RegistroCliente(request):
             Direccion = form.cleaned_data.get('Direccion')
             Sede = form.cleaned_data.get('Sede')
 
-            print(NIT)
-            print(Direccion)
-            print(NIT)
             usu = Cliente.objects.filter(dpi = DPI)
             verificacion = usu.exists()
 
-            print(verificacion)
             if verificacion == False:
-                print('asdf')
                 Cliente.objects.create(
                     dpi = DPI,
                     nombre = Nombre,
@@ -73,7 +68,6 @@ def RegistroCliente(request):
                     direccion = Direccion,
                     sede = Sede
                 )
-                print('1asdf')
                 return redirect('ClienteCreado')
             else:
                 return render(request, 'RegistroCliente.html',{"form":form})
@@ -84,11 +78,110 @@ def RegistroCliente(request):
     return render(request, 'RegistroCliente.html',{"form":form})
 
 
+def RegistroProducto(request):
+    
+    if request.method == "POST":
+        form = FormularioRegistroProducto(request.POST, request.FILES)
+
+        if form.is_valid():
+            SKU = form.cleaned_data.get('SKU')
+            CodigoBarras = form.cleaned_data.get('CodigoBarras')
+            Nombre = form.cleaned_data.get('Nombre')
+            Descripcion = form.cleaned_data.get('Descripcion')
+            Precio = form.cleaned_data.get('Precio')
+            Categoria = form.cleaned_data.get('Categoria')
+
+            print(SKU)
+            usu = Producto.objects.filter(sku = SKU)
+            verificacion = usu.exists()
+
+            print(verificacion)
+            if verificacion == False:
+                Producto.objects.create(
+                    sku = SKU,
+                    codigoBarras = CodigoBarras,
+                    nombre = Nombre,
+                    descripcion = Descripcion,
+                    precio = Precio,
+                    categoria = Categoria
+                )
+                return redirect('ProductoCreado')
+            else:
+                return render(request, 'RegistroProducto.html',{"form":form})
+
+    else:
+        form = FormularioRegistroProducto()
+
+    return render(request, 'RegistroProducto.html',{"form":form})
+
+def RegistroCategoria(request):
+    
+    if request.method == "POST":
+        form = FormularioRegistroCategoria(request.POST, request.FILES)
+
+        if form.is_valid():
+            Nombre = form.cleaned_data.get('Nombre')
+            
+            usu = Categoria.objects.filter(nombre = Nombre)
+            verificacion = usu.exists()
+
+            if verificacion == False:
+                Categoria.objects.create(
+                    nombre = Nombre
+                )
+                return redirect('CategoriaCreada')
+            else:
+                return render(request, 'RegistroCategoria.html',{"form":form})
+
+    else:
+        form = FormularioRegistroCategoria()
+
+    return render(request, 'RegistroCategoria.html',{"form":form})
+
+def RegistroSede(request):
+    
+    if request.method == "POST":
+        form = FormularioRegistroCategoria(request.POST, request.FILES)
+
+        if form.is_valid():
+            Alias = form.cleaned_data.get('Alias')
+            Direccion = form.cleaned_data.get('Direccion')
+            Departamento = form.cleaned_data.get('Departamento')
+            Municipio = form.cleaned_data.get('Municipio')
+            Encargado = form.cleaned_data.get('Encargado')
+
+            
+            usu = Categoria.objects.filter(alias = Alias)
+            verificacion = usu.exists()
+
+            if verificacion == False:
+                Categoria.objects.create(
+                    alias = Alias,
+                    direccion = Direccion,
+                    departamento = Departamento,
+                    municipio = Municipio,
+                    encargado = Encargado
+                )
+                return redirect('SedeCreada')
+            else:
+                return render(request, 'RegistroSede.html',{"form":form})
+
+    else:
+        form = FormularioRegistroCategoria()
+
+    return render(request, 'RegistroSede.html',{"form":form})
+
 def UsuarioCreado(request):
     if request.method == "POST":
         return redirect('Login')
     else:
         return render(request, 'UsuarioCreado.html', {})
+
+def SedeCreada(request):
+    if request.method == "POST":
+        return redirect('Login')
+    else:
+        return render(request, 'SedeCreada.html', {})
 
 
 def ClienteCreado(request):
@@ -96,6 +189,20 @@ def ClienteCreado(request):
         return redirect('Login')
     else:
         return render(request, 'ClienteCreado.html', {})
+
+
+def ProductoCreado(request):
+    if request.method == "POST":
+        return redirect('Login')
+    else:
+        return render(request, 'ProductoCreado.html', {})
+
+
+def CategoriaCreada(request):
+    if request.method == "POST":
+        return redirect('Login')
+    else:
+        return render(request, 'CategoriaCreada.html', {})
 
 def Logout(request):
     request.session["Usuario"] = ""
