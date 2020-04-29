@@ -1,0 +1,11 @@
+<div>
+    <h1><a href="/">Listado de Transferencias</a></h1>
+</div>
+
+{% for transferencias in OrdenTransferencia %}
+    <div>
+        <p> ID: {{ OrdenTransferencia.id_transferencia }}</p>
+        <p>FECHA: {{OrdenTransferencia.fecha}}</p>
+        <p>IDPRODUCTO: {{OrdenTransferencia.id_producto}}</p>
+    </div>
+{% endfor %}

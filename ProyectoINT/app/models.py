@@ -40,6 +40,25 @@ class Sede(models.Model):
     direccion = models.CharField(max_length=150)
     departamento = models.CharField(max_length=150)
     municipio = models.CharField(max_length=150)
-    enargado = models.ForeignKey('Usuario', db_column='dpi')
+    encargado = models.ForeignKey('Usuario', db_column='dpi')
+
+
+class OrdenVenta(models.Model):
+    id_venta = models.BigIntegerField(primary_key=True)
+    fecha = models.DateTimeField(null=True)
+    id_sede = models.ForeignKey('Sede', db_column='id_sede')
+    id_bodega = models.ForeignKey('Bodega', db_column='id_bodega')
+    id_producto = models.ForeignKey('Producto', db_column='sku')
+    id_cliente = models.ForeignKey('Cliente', db_column='dpi')
+
+
+
+class OrdenTransferencia(models.Model):
+    id_transferencia=models.BigIntegerField(primary_key=True)
+    fecha = models.DateTimeField(null=True)
+    id_sede = models.ForeignKey('Sede', db_column='id_sede')
+    id_bodega = models.ForeignKey('Bodega', db_column='id_bodega')
+    id_producto = models.ForeignKey('Producto', db_column='sku')
+    id_cliente = models.ForeignKey('Cliente', db_column='dpi')
 
 # Create your models here.

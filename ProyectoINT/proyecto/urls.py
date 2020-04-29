@@ -36,4 +36,6 @@ urlpatterns = [
     url(r'^Login/$', views.Login, name = 'Login'),
     url(r'^Logout', views.Logout, name = 'Logout'),
     url(r'^PaginaEncargado', views.PaginaEncargado, name = 'PaginaEncargado'),
+    url(r'^paginaventas/', views.PaginaVentas, name = 'PaginaVentas'),
+    url(r'^paginatransf/', views.PaginaTransferencias, name = 'PaginaTransferencias'),
 ]

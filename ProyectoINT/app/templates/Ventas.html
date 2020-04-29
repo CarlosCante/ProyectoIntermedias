@@ -1,0 +1,11 @@
+<div>
+    <h1><a href="/">Listado de Ventas</a></h1>
+</div>
+
+{% for ventas in OrdenVenta %}
+    <div>
+        <p> ID: {{ OrdenVenta.id_venta }}</p>
+        <p>FECHA: {{OrdenVenta.fecha}}</p>
+        <p>IDPRODUCTO: {{OrdenVenta.id_producto}}</p>
+    </div>
+{% endfor %}

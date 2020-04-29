@@ -259,3 +259,11 @@ def AccesoDenegado(request):
         return redirect('pag_inicio')
     else:
         return render(request, 'AccesoDenegado.html', {})
+
+def PaginaVentas(request):
+    ventas = OrdenVenta.objects.all()
+    return render(request, 'Ventas.html',{})
+
+def PaginaTransferencias(request):
+    transferencias = OrdenTransferencia.objects.all()
+    return render(request, 'Transferencias.html',{})

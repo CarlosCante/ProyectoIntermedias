@@ -24,7 +24,7 @@ class FormularioRegistroProducto(forms.Form):
     Nombre = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
     Descripcion = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
     Precio = forms.FloatField(widget=forms.TextInput(),required = True)
-    Categoria = forms.CheckboxSelectMultiple(required = True)
+    Categoria = forms.CheckboxSelectMultiple()
 
 class FormularioRegistroCategoria(forms.Form):
     Nombre = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
