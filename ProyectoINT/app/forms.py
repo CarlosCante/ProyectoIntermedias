@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.utils.translation import ugettext as _
 from .models import *
+from django.forms.widgets import CheckboxSelectMultiple
+
+from .models import Categoria
 
 class FormularioRegistroUsuario(forms.Form):
     DPI = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
@@ -24,7 +27,7 @@ class FormularioRegistroProducto(forms.Form):
     Nombre = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
     Descripcion = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
     Precio = forms.FloatField(widget=forms.TextInput(),required = True)
-    Categoria = forms.CheckboxSelectMultiple(required = True)
+    Categori = Categoria.objects.all()
 
 class FormularioRegistroCategoria(forms.Form):
     Nombre = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
@@ -34,8 +37,11 @@ class FormularioLogin(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label=_('Password'), required = True)
 
 class FormularioRegistroSede(forms.Form):
-    ALIAS = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
-    DIRECCION = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
-    DEPARTAMENTO = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
-    MUNICIPIO = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
-    ENCARGADO = forms.CheckboxSelectMultiple()
+    Alias = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+    Direccion = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+    Departamento = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+    Municipio = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+    Encargado = forms.CheckboxSelectMultiple()
+
+
+

@@ -22,24 +22,39 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=150)
     descripcion = models.CharField(max_length=150)
     precio = models.FloatField()
-    categoria = models.ManyToManyField('Categoria', db_column='id')
+    categoria = models.ManyToManyField('Categoria')
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=150)
 
+    def __unicode__(self):
+        return '{}'.format(self.nombre)
+
 class Bodega(models.Model):
-    id_bodega = models.BigIntegerField(primary_key=True)
     nombre = models.CharField(max_length=150)
     direccion = models.CharField(max_length=60)
     estado = models.CharField(max_length=150)
-    encargado = models.ForeignKey('Usuario', db_column='dpi')
+    encargado = models.ForeignKey('Usuario', db_column='dpi', on_delete= models.CASCADE)
 
 class Sede(models.Model):
-    id_sede = models.BigIntegerField(primary_key=True)
     alias = models.CharField(max_length=150)
     direccion = models.CharField(max_length=150)
     departamento = models.CharField(max_length=150)
     municipio = models.CharField(max_length=150)
-    enargado = models.ForeignKey('Usuario', db_column='dpi')
+    enargado = models.ForeignKey('Usuario', db_column='dpi', on_delete= models.CASCADE)
 
+class Venta(models.Model):
+    cliente = models.ForeignKey('Cliente', on_delete= models.CASCADE)
+    vendedor = models.ForeignKey('Usuario', on_delete= models.CASCADE)
+    fecha_facturacion = models.DateField()
+    fecha_facturacion = models.DateField(null = True)
+
+class Venta_Producto(models.Model):
+    id_venta = models.ForeignKey('Venta')
+    id_producto = models.ForeignKey('Producto')
+    cantidad = models.IntegerField()
+   
+
+
+    
 # Create your models here.

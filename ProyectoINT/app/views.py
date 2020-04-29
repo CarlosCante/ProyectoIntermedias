@@ -7,6 +7,7 @@ from .forms import *
 from .models import *
 import time, random, string
 from django.db import connection
+from django.shortcuts import get_object_or_404
 
 def pag_inicio(request):
     return render(request, 'Principal.html',{})
@@ -89,29 +90,45 @@ def RegistroProducto(request):
             Nombre = form.cleaned_data.get('Nombre')
             Descripcion = form.cleaned_data.get('Descripcion')
             Precio = form.cleaned_data.get('Precio')
-            Categoria = form.cleaned_data.get('Categoria')
 
-            print(SKU)
+            print(form.cleaned_data)
+
+            Categori = request.POST.get('Categorias')
+
             usu = Producto.objects.filter(sku = SKU)
             verificacion = usu.exists()
-
+            
+            print(verificacion)
+            print(Categori)
             print(verificacion)
             if verificacion == False:
-                Producto.objects.create(
+                p = Producto(
                     sku = SKU,
                     codigoBarras = CodigoBarras,
                     nombre = Nombre,
                     descripcion = Descripcion,
-                    precio = Precio,
-                    categoria = Categoria
+                    precio = Precio
                 )
+
+
+                cats = []
+                for cat in Categori:
+                    #cada categoria
+                    cats.append(get_object_or_404(Categoria, id= cat))
+                    print(Categori)
+
+                print(cats)
+                
+                p.categoria = cats
+
+                p.save()
+
                 return redirect('ProductoCreado')
             else:
                 return render(request, 'RegistroProducto.html',{"form":form})
 
     else:
         form = FormularioRegistroProducto()
-
     return render(request, 'RegistroProducto.html',{"form":form})
 
 def RegistroCategoria(request):
@@ -141,7 +158,7 @@ def RegistroCategoria(request):
 def RegistroSede(request):
     
     if request.method == "POST":
-        form = FormularioRegistroCategoria(request.POST, request.FILES)
+        form = FormularioRegistroSede(request.POST, request.FILES)
 
         if form.is_valid():
             Alias = form.cleaned_data.get('Alias')
@@ -167,7 +184,7 @@ def RegistroSede(request):
                 return render(request, 'RegistroSede.html',{"form":form})
 
     else:
-        form = FormularioRegistroCategoria()
+        form = FormularioRegistroSede()
 
     return render(request, 'RegistroSede.html',{"form":form})
 
