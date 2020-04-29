@@ -6,6 +6,7 @@ from .models import *
 from django.forms.widgets import CheckboxSelectMultiple
 
 from .models import Categoria
+from .models import Cliente
 
 class FormularioRegistroUsuario(forms.Form):
     DPI = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
@@ -42,6 +43,37 @@ class FormularioRegistroSede(forms.Form):
     Departamento = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
     Municipio = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
     Encargado = forms.CheckboxSelectMultiple()
+
+#class FormularioRegistroVenta(forms.Form):
+#    Cliente = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+#    Vendedor = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+#    Fecha_facturacion = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+#    Fecha_entrega = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+
+class FormularioRegistroVenta(forms.Form):
+    DEMO_CHOICES =( 
+    ("1", "Naveen"), 
+    ("2", "Pranav"), 
+    ("3", "Isha"), 
+    ("4", "Saloni"), 
+    )
+    Cl = Cliente.objects.all()
+
+    
+    Client = forms.MultipleChoiceField(choices=Cl)
+    Vendedor = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+    Fecha_facturacion = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+    Fecha_entrega = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+
+class FormularioRegistroDetalleVenta(forms.Form):
+    Id_venta = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+    Id_producto = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+    Cantidad = forms.CharField(max_length=150, widget=forms.TextInput(),required = True)
+ 
+
+
+
+
 
 
 

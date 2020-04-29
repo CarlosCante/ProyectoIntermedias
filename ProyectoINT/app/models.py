@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Usuario(models.Model):
     dpi = models.BigIntegerField(primary_key=True)
     nombre = models.CharField(max_length=150)
@@ -47,7 +46,7 @@ class Venta(models.Model):
     cliente = models.ForeignKey('Cliente', on_delete= models.CASCADE)
     vendedor = models.ForeignKey('Usuario', on_delete= models.CASCADE)
     fecha_facturacion = models.DateField()
-    fecha_facturacion = models.DateField(null = True)
+    fecha_entrega = models.DateField(null = True)
 
 class Venta_Producto(models.Model):
     id_venta = models.ForeignKey('Venta')

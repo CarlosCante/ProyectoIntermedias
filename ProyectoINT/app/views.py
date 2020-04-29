@@ -131,6 +131,41 @@ def RegistroProducto(request):
         form = FormularioRegistroProducto()
     return render(request, 'RegistroProducto.html',{"form":form})
 
+
+
+def RegistroVenta(request):
+
+    if request.method == "POST":
+        form = FormularioRegistroVenta(request.POST, request.FILES)
+
+        if form.is_valid():
+            Client = form.cleaned_data.get('Client')
+            Vendedor = form.cleaned_data.get('Vendedor')
+            Fecha_facturacion = form.cleaned_data.get('Fecha_facturacion')
+            Fecha_entrega = form.cleaned_data.get('Fecha_entrega')
+            
+            #Categori = request.POST.get('Categorias')
+            
+            if 1 == 1:
+                p = Venta(
+                    cliente = Client,
+                    vendedor = Vendedor,
+                    fecha_facturacion = Fecha_facturacion,
+                    fecha_entrega = Fecha_entrega,
+                )
+
+                p.save()
+
+                return redirect('ProductoCreado')
+            else:
+                return render(request, 'RegistroVenta.html',{"form":form})
+
+    else:
+        form = FormularioRegistroVenta()
+    return render(request, 'RegistroVenta.html',{"form":form})
+
+
+
 def RegistroCategoria(request):
     
     if request.method == "POST":

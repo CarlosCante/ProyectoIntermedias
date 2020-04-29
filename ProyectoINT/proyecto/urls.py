@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'RegistroCliente/$', views.RegistroCliente, name = 'RegistroCliente'),
     url(r'RegistroProducto/$', views.RegistroProducto, name = 'RegistroProducto'),
     url(r'RegistroCategoria/$', views.RegistroCategoria, name = 'RegistroCategoria'),
+    url(r'RegistroVenta/$', views.RegistroVenta, name = 'RegistroVenta'),
     url(r'RegistroSede/$', views.RegistroSede, name = 'RegistroSede'),
     url(r'^UsuarioCreado', views.UsuarioCreado, name = 'UsuarioCreado'),
     url(r'^ClienteCreado', views.ClienteCreado, name = 'ClienteCreado'),
