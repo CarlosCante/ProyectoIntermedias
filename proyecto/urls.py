@@ -35,4 +35,8 @@ urlpatterns = [
     url(r'^PaginaBodeguero', views.PaginaBodeguero, name = 'PaginaBodeguero'),
     url(r'^PaginaRepartidor', views.PaginaAdministrador, name = 'PaginaRepartidor'),
     url(r'^AccesoDenegado', views.AccesoDenegado, name = 'AccesoDenegado'),
+    url(r'^PaginaEncargadoSede/$', views.PaginaEncargadoSede, name = 'PaginaEncargadoSede'),
+    url(r'^PaginaEncargadoSede/CrearBodega', views.CrearBodega, name = 'CrearBodega'),
+    url(r'^PaginaEncargadoSede/CrearUsuarioPorEncargado', views.CrearUsuarioPorEncargado, name = 'CrearUsuarioPorEncargado'),
+
 ]

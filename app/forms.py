@@ -29,3 +29,18 @@ class FormularioCrearSede(forms.Form):
     Departamento = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
     Municipio = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
     Encargado = forms.ChoiceField(choices=listausuarios())
+
+class FormularioCrearBodega(forms.Form):
+    Nombre = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
+    Direccion = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
+    Encargado = forms.ChoiceField(choices=listausuarios())
+
+class FormularioCrearUsuarioPorEncargado(forms.Form):
+    DPI = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
+    Nombre = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
+    Correo = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
+    Fecha_Nacimiento = forms.DateField(required = True,input_formats = ["%d/%m/%Y"], label='Fecha de Nacimiento (DD/MM/YYYY)')
+    Password = forms.CharField(widget=forms.PasswordInput, label=_('Password'))
+    Vendedor = forms.BooleanField()
+    Bodeguero =  forms.BooleanField()
+    Repartidor = forms.BooleanField() 

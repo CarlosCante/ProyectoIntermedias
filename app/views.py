@@ -7,6 +7,7 @@ from .forms import *
 from .models import *
 import time, random, string
 from django.db import connection
+from datetime import datetime
 
 def pag_inicio(request):
     return render(request, 'Principal.html',{})
@@ -61,8 +62,6 @@ def RegistroUsuario(request):
         form = FormularioRegistroUsuario()
 
     return render(request, 'RegistroUsuario.html',{"form":form})
-
-
 
 def UsuarioCreado(request):
     if request.method == "POST":
@@ -194,7 +193,6 @@ def CrearSede(request):
     else:
         return redirect('AccesoDenegado')
 
-
 def PaginaVendedor(request):
     if "RolVendedor" in request.session:
         if  request.session["RolVendedor"] == 'S':
@@ -217,6 +215,144 @@ def PaginaRepartidor(request):
     if "RolRepartidor" in request.session:
         if  request.session["RolRepartidor"] == 'S':
             return render(request, 'PaginaRepartidor.html',{})
+        else:
+            return redirect('AccesoDenegado')
+    else:
+        return redirect('AccesoDenegado')
+
+def PaginaEncargadoSede(request):
+    if "RolRepartidor" in request.session or "RolVendedor" in request.session or "RolBodeguero" in request.session:
+        if  request.session["RolRepartidor"] == 'S' or request.session["RolVendedor"] == 'S' or request.session["RolBodeguero"] == 'S':
+            return render(request, 'PaginaEncargadoSede.html', {})
+        else:
+            return redirect('AccesoDenegado')
+    else:
+        return redirect('AccesoDenegado')
+
+def CrearBodega(request):
+    if "RolRepartidor" in request.session or "RolVendedor" in request.session or "RolBodeguero" in request.session:
+        if  request.session["RolRepartidor"] == 'S' or request.session["RolVendedor"] == 'S' or request.session["RolBodeguero"] == 'S':
+            
+            usu = USUARIO.objects.get(correo = request.session["Correo"])
+            sde = SEDE.objects.filter(encargado_dpi = usu)
+
+            if sde.exists():
+                if request.method == 'POST':
+                    datos = request.POST
+                
+                    ID = random.randrange(5, 1000000)
+                    Nombre =  datos.get('Nombre')
+                    Direccion = datos.get('Direccion')
+                    Estado = "Activa"
+                    EncargadoBodega = USUARIO.objects.get(correo = datos.get('Encargado'))
+                    SedeBodega = SEDE.objects.get(id = sde[0].id)
+
+                    bdg = BODEGA.objects.filter(id = ID)
+                    while bdg.exists():
+                        ID = random.randrange(5, 1000000)
+                        bdg = BODEGA.objects.filter(id = ID)
+
+                    b = BODEGA(
+                        id = ID,
+                        nombre = Nombre,
+                        direccion = Direccion,
+                        estado = Estado,
+                        encargado_dpi = EncargadoBodega,
+                        sede_id = SedeBodega,
+                    )
+
+                    b.save()
+
+                    return redirect('CrearBodega')
+                else:
+                    form = FormularioCrearBodega()
+                    return render(request, 'EncargadoSede/CrearBodega.html', {"form": form, "sede": sde[0].alias})
+                
+            else:
+                return redirect('AccesoDenegado')
+            
+        else:
+            return redirect('AccesoDenegado')
+    else:
+        return redirect('AccesoDenegado')
+
+def CrearUsuarioPorEncargado(request):
+    if "RolRepartidor" in request.session or "RolVendedor" in request.session or "RolBodeguero" in request.session:
+        if  request.session["RolRepartidor"] == 'S' or request.session["RolVendedor"] == 'S' or request.session["RolBodeguero"] == 'S':
+            
+            usu = USUARIO.objects.get(correo = request.session["Correo"])
+            sde = SEDE.objects.filter(encargado_dpi = usu)
+
+            if sde.exists():
+                if request.method == 'POST':
+                    datos = request.POST
+
+                    print("Vendedor: " + str(datos.get('Vendedor')))
+                    print("Vendedor: " + str(datos.get('Bodeguero')))
+                    print("Vendedor: " + str(datos.get('Repartidor')))
+
+                    DPI = datos.get('DPI')
+                    Nombre = datos.get('Nombre')
+                    Correo = datos.get('Correo')
+                    Fecha_Nacimiento = datetime.strptime(datos.get('Fecha_Nacimiento'),"%d/%m/%Y").strftime("%Y-%m-%d") 
+                    passw = datos.get('Password')
+
+                    usu = USUARIO.objects.filter(dpi = DPI)
+                    verificacion = usu.exists()
+
+                    if verificacion == False:
+                        #Se crea un nuevo usuario
+
+                        u = USUARIO(
+                            dpi = DPI,
+                            nombre = Nombre,
+                            correo = Correo,
+                            fecha_nacimiento = Fecha_Nacimiento,
+                            password = passw,
+                        )
+
+                        #Se guarda el usuario
+                        u.save()
+
+                        #2 vendedor 
+                        #3 bodeguero
+                        #4 repartidor
+
+                        if str(datos.get('Vendedor')) == "on":
+                            rlv = ROL.objects.get(id = 2)
+                            arv = ASIG_ROL.objects.create(
+                                usuario_dpi = u,
+                                rol_id = rlv,
+                            )
+                            arv.save()
+                        
+                        if str(datos.get('Bodeguero')) == "on":
+                            rlb = ROL.objects.get(id = 3)
+                            arb = ASIG_ROL.objects.create(
+                                usuario_dpi = u,
+                                rol_id = rlb,
+                            )
+                            arb.save()
+                        
+                        if str(datos.get('Repartidor')) == "on":
+                            rlr = ROL.objects.get(id = 4)
+                            arr = ASIG_ROL.objects.create(
+                                usuario_dpi = u,
+                                rol_id = rlr,
+                            )
+                            arr.save()
+
+                        return redirect('CrearUsuarioPorEncargado')
+                    else:
+                        return redirect('CrearUsuarioPorEncargado')
+
+                else:
+                    form = FormularioCrearUsuarioPorEncargado()
+                    return render(request, 'EncargadoSede/CrearUsuarioPorEncargado.html', {"form": form, "sede": sde[0].alias})
+                
+            else:
+                return redirect('AccesoDenegado')
+            
         else:
             return redirect('AccesoDenegado')
     else:
