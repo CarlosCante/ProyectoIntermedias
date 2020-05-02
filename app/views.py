@@ -154,6 +154,47 @@ def PaginaAdministrador(request):
     else:
         return redirect('AccesoDenegado')
 
+def CrearSede(request):
+    if "RolAdministrador" in request.session:
+        if  request.session["RolAdministrador"] == 'S':
+            if request.method == 'POST':
+                datos = request.POST
+                
+                ID = random.randrange(5, 1000000)
+                Alias =  datos.get('Alias')
+                Direccion = datos.get('Encargado')
+                Departamento = datos.get('Departamento')
+                Municipio = datos.get('Municipio')
+                EncargadoCorreo = USUARIO.objects.get(correo = datos.get('Encargado'))
+                
+                sde = SEDE.objects.filter(id = ID)
+                while sde.exists():
+                    ID = random.randrange(5, 1000000)
+                    sde = SEDE.objects.filter(id = ID)
+
+                s = SEDE(
+                    id = ID,
+                    alias = Alias,
+                    direccion = Direccion,
+                    departamento = Departamento,
+                    municipio = Municipio,
+                    encargado_dpi = EncargadoCorreo,
+                )
+
+                s.save()
+
+
+                return redirect('CrearSede')
+            else:
+                form = FormularioCrearSede()
+                    
+                return render(request, 'Administrador/CrearSede.html', {"form": form})
+        else:
+            return redirect('AccesoDenegado')
+    else:
+        return redirect('AccesoDenegado')
+
+
 def PaginaVendedor(request):
     if "RolVendedor" in request.session:
         if  request.session["RolVendedor"] == 'S':

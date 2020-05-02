@@ -4,6 +4,14 @@ from django.forms import ModelForm
 from django.utils.translation import ugettext as _
 from .models import *
 
+
+def listausuarios():
+    usr = USUARIO.objects.all()
+    usr2 = []
+    for x in range(0, len(usr)):
+        usr2.append((usr[x].correo,usr[x].correo))
+    return usr2
+
 class FormularioRegistroUsuario(forms.Form):
     DPI = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
     Nombre = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
@@ -14,3 +22,10 @@ class FormularioRegistroUsuario(forms.Form):
 class FormularioLogin(forms.Form):
     Correo = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
     password = forms.CharField(widget=forms.PasswordInput, label=_('Password'), required = True)
+
+class FormularioCrearSede(forms.Form):
+    Alias = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
+    Direccion = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
+    Departamento = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
+    Municipio = forms.CharField(max_length=50, widget=forms.TextInput(),required = True)
+    Encargado = forms.ChoiceField(choices=listausuarios())
