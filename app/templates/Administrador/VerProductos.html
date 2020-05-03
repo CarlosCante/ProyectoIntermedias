@@ -1,0 +1,48 @@
+{% extends 'PaginaAdministrador.html'%}
+{% load staticfiles %}
+
+{% block contenido %}
+
+
+<body>
+      <header id="header" class="clear">
+        <div id="hgroup">
+            <h1><a href="#">Productos</a></h1>
+        </div>
+        
+    
+      </header>
+    
+      <div class="col-sm-6">
+        <section class="panel">
+          <header class="panel-heading">
+            Productos
+          </header>
+          <table class="table table-striped">
+            <thead>
+              <tr>            
+                <th>SKU</th> 
+                <th>Codigo de barras</th> 
+                <th>Nombre</th> 
+                <th>Descripcion</th>   
+                <th>Precio</th>  
+              </tr>
+            </thead>
+            <tbody>
+            {% for prod in producto %}
+            <tr>
+                <td>{{prod.sku}}</td>
+                <td>{{prod.codigo_barras}}</td>
+                <td>{{prod.nombre}}</td>
+                <td>{{prod.descripcion}}</td>
+                <td>{{prod.precio}}</td>
+            </tr>
+            {%endfor%}
+            </tbody>                    
+          </table>
+        </section>
+  </div>
+
+</body>
+
+{% endblock %}

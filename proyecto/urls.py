@@ -31,6 +31,10 @@ urlpatterns = [
     url(r'^Logout', views.Logout, name = 'Logout'),
     url(r'^PaginaAdministrador/$', views.PaginaAdministrador, name = 'PaginaAdministrador'),
     url(r'^PaginaAdministrador/CrearSede', views.CrearSede, name = 'CrearSede'),
+    url(r'^PaginaAdministrador/ModificarRoles', views.ModificarRoles, name = 'ModificarRoles'),
+    url(r'^PaginaAdministrador/CrearProducto', views.CrearProducto, name = 'CrearProducto'),
+    url(r'^PaginaAdministrador/VerProductos', views.VerProductos, name = 'VerProductos'),
+    url(r'^PaginaAdministrador/VerSedes', views.VerSedes, name = 'VerSedes'),
     url(r'^PaginaVendedor', views.PaginaVendedor, name = 'PaginaVendedor'),
     url(r'^PaginaBodeguero', views.PaginaBodeguero, name = 'PaginaBodeguero'),
     url(r'^PaginaRepartidor', views.PaginaAdministrador, name = 'PaginaRepartidor'),
@@ -38,5 +42,5 @@ urlpatterns = [
     url(r'^PaginaEncargadoSede/$', views.PaginaEncargadoSede, name = 'PaginaEncargadoSede'),
     url(r'^PaginaEncargadoSede/CrearBodega', views.CrearBodega, name = 'CrearBodega'),
     url(r'^PaginaEncargadoSede/CrearUsuarioPorEncargado', views.CrearUsuarioPorEncargado, name = 'CrearUsuarioPorEncargado'),
-
+    url(r'^PaginaEncargadoSede/EstadoBodega', views.EstadoBodega, name = 'EstadoBodega'),
 ]

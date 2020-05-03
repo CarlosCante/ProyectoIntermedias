@@ -1,0 +1,48 @@
+{% extends 'PaginaAdministrador.html'%}
+{% load staticfiles %}
+
+{% block contenido %}
+
+
+<body>
+      <header id="header" class="clear">
+        <div id="hgroup">
+            <h1><a href="#">Sedes</a></h1>
+        </div>
+        
+    
+      </header>
+    
+      <div class="col-sm-6">
+        <section class="panel">
+          <header class="panel-heading">
+            Productos
+          </header>
+          <table class="table table-striped">
+            <thead>
+              <tr>            
+                <th>Alias</th> 
+                <th>Direccion</th> 
+                <th>Departamento</th> 
+                <th>Municipio</th>   
+                <th>Encargado</th>  
+              </tr>
+            </thead>
+            <tbody>
+            {% for sds in sedes %}
+            <tr>
+                <td>{{sds.alias}}</td>
+                <td>{{sds.direccion}}</td>
+                <td>{{sds.departamento}}</td>
+                <td>{{sds.municipio}}</td>
+                <td>{{sds.encargado_dpi.correo}}</td>
+            </tr>
+            {%endfor%}
+            </tbody>                    
+          </table>
+        </section>
+  </div>
+
+</body>
+
+{% endblock %}

@@ -161,7 +161,7 @@ def CrearSede(request):
                 
                 ID = random.randrange(5, 1000000)
                 Alias =  datos.get('Alias')
-                Direccion = datos.get('Encargado')
+                Direccion = datos.get('Direccion')
                 Departamento = datos.get('Departamento')
                 Municipio = datos.get('Municipio')
                 EncargadoCorreo = USUARIO.objects.get(correo = datos.get('Encargado'))
@@ -188,6 +188,146 @@ def CrearSede(request):
                 form = FormularioCrearSede()
                     
                 return render(request, 'Administrador/CrearSede.html', {"form": form})
+        else:
+            return redirect('AccesoDenegado')
+    else:
+        return redirect('AccesoDenegado')
+
+def ModificarRoles(request):
+    if "RolAdministrador" in request.session:
+        if  request.session["RolAdministrador"] == 'S':
+            if request.method == 'POST':
+                datos = request.POST
+
+                usu = USUARIO.objects.get(correo = datos.get('Encargado'))
+
+                if str(datos.get('Vendedor')) == "on":
+                    rlv = ROL.objects.get(id = 2)
+                    rlvasig = ASIG_ROL.objects.filter(usuario_dpi = usu, rol_id = rlv)
+                    if not rlvasig.exists():
+                        arv = ASIG_ROL.objects.create(
+                        usuario_dpi = usu,
+                        rol_id = rlv,
+                        )
+                        arv.save()
+                else:
+                    rlv = ROL.objects.get(id = 2)
+                    rlvasig = ASIG_ROL.objects.filter(usuario_dpi = usu, rol_id = rlv)
+                    if rlvasig.exists():
+                        ASIG_ROL.objects.filter(usuario_dpi = usu, rol_id = rlv).delete()
+                    
+                        
+
+                if str(datos.get('Bodeguero')) == "on":
+                    rlb = ROL.objects.get(id = 3)
+                    rlbasig = ASIG_ROL.objects.filter(usuario_dpi = usu, rol_id = rlb)
+                    if not rlbasig.exists():
+                        arb = ASIG_ROL.objects.create(
+                        usuario_dpi = usu,
+                        rol_id = rlb,
+                        )
+                        arb.save()
+                else:
+                    rlb = ROL.objects.get(id = 3)
+                    rlbasig = ASIG_ROL.objects.filter(usuario_dpi = usu, rol_id = rlb)
+                    if rlbasig.exists():
+                        ASIG_ROL.objects.filter(usuario_dpi = usu, rol_id = rlb).delete()
+                        
+
+
+                
+                if str(datos.get('Repartidor')) == "on":
+                    rlr = ROL.objects.get(id = 4)
+                    rlrasig = ASIG_ROL.objects.filter(usuario_dpi = usu, rol_id = rlr)
+                    if not rlrasig.exists():
+                        arr = ASIG_ROL.objects.create(
+                        usuario_dpi = usu,
+                        rol_id = rlr,
+                        )
+                        arr.save()
+                else:
+                    rlr = ROL.objects.get(id = 4)
+                    rlrasig = ASIG_ROL.objects.filter(usuario_dpi = usu, rol_id = rlr)
+                    if rlrasig.exists():
+                        ASIG_ROL.objects.filter(usuario_dpi = usu, rol_id = rlr).delete()
+
+
+                return redirect('ModificarRoles')
+            else:
+                form = FormularioModificarRol()
+                return render(request, 'Administrador/ModificarRoles.html', {"form": form})
+        else:
+            return redirect('AccesoDenegado')
+    else:
+        return redirect('AccesoDenegado')
+
+def CrearProducto(request):
+    if "RolAdministrador" in request.session:
+        if  request.session["RolAdministrador"] == 'S':
+            if request.method == 'POST':
+                datos = request.POST
+                
+                Sku = random.randrange(5, 1000000)
+                CodigoB =  random.randrange(5, 1000000)
+                Nombre = datos.get('Nombre')
+                Descripcion = datos.get('Descripcion')
+                Precio = datos.get('Precio')
+                Categoria = CATEGORIA_PRODUCTO.objects.get(nombre = datos.get('Categoria'))
+                
+                prd = PRODUCTO.objects.filter(sku = Sku)
+                while prd.exists():
+                    Sku = random.randrange(5, 1000000)
+                    prd = PRODUCTO.objects.filter(sku = Sku)
+
+
+                p = PRODUCTO(
+                    sku = Sku,
+                    codigo_barras = CodigoB,
+                    nombre = Nombre,
+                    descripcion = Descripcion,
+                    precio =  Precio,
+                )
+
+                p.save()
+
+                asig_cat = ASIG_CATEGORIA.objects.create(
+                    product_sku = p,
+                    categoria_id = Categoria,
+                )
+
+                asig_cat.save()
+
+
+
+                return redirect('CrearProducto')
+            else:
+                form = FormularioCrearProducto()
+                    
+                return render(request, 'Administrador/CrearProducto.html', {"form": form})
+        else:
+            return redirect('AccesoDenegado')
+    else:
+        return redirect('AccesoDenegado')
+
+def VerProductos(request):
+    if "RolAdministrador" in request.session:
+        if  request.session["RolAdministrador"] == 'S':
+            
+            prd = PRODUCTO.objects.all()
+
+            return render(request, 'Administrador/VerProductos.html', {"producto": prd})
+        else:
+            return redirect('AccesoDenegado')
+    else:
+        return redirect('AccesoDenegado')
+
+def VerSedes(request):
+    if "RolAdministrador" in request.session:
+        if  request.session["RolAdministrador"] == 'S':
+            
+            sds = SEDE.objects.all()
+
+            return render(request, 'Administrador/VerSedes.html', {"sedes": sds})
         else:
             return redirect('AccesoDenegado')
     else:
@@ -276,6 +416,41 @@ def CrearBodega(request):
     else:
         return redirect('AccesoDenegado')
 
+def EstadoBodega(request):
+    if "RolRepartidor" in request.session or "RolVendedor" in request.session or "RolBodeguero" in request.session:
+        if  request.session["RolRepartidor"] == 'S' or request.session["RolVendedor"] == 'S' or request.session["RolBodeguero"] == 'S':
+            
+            usu = USUARIO.objects.get(correo = request.session["Correo"])
+            sde = SEDE.objects.filter(encargado_dpi = usu)
+
+            if sde.exists():
+                if request.method == 'POST':
+                    datos = request.POST
+                    Nombre = datos.get('Nombre')
+                    Estado = datos.get('Estado')
+
+                    b = BODEGA.objects.filter(nombre = Nombre)
+                    if b.exists():
+                        bga = BODEGA.objects.get(nombre = Nombre)
+                        bga.estado = Estado
+                        bga.save()
+
+                    return redirect('EstadoBodega')
+
+                else:
+                    bodegas = BODEGA.objects.filter(sede_id = sde)
+
+                    form = FormularioEstadoBodegas()
+
+                    return render(request, 'EncargadoSede/EstadoBodegas.html', {"form": form, "sede": sde[0].alias, "bodegas": bodegas})
+                
+            else:
+                return redirect('AccesoDenegado')
+        else:
+            return redirect('AccesoDenegado')
+    else:
+        return redirect('AccesoDenegado')
+
 def CrearUsuarioPorEncargado(request):
     if "RolRepartidor" in request.session or "RolVendedor" in request.session or "RolBodeguero" in request.session:
         if  request.session["RolRepartidor"] == 'S' or request.session["RolVendedor"] == 'S' or request.session["RolBodeguero"] == 'S':
@@ -286,10 +461,6 @@ def CrearUsuarioPorEncargado(request):
             if sde.exists():
                 if request.method == 'POST':
                     datos = request.POST
-
-                    print("Vendedor: " + str(datos.get('Vendedor')))
-                    print("Vendedor: " + str(datos.get('Bodeguero')))
-                    print("Vendedor: " + str(datos.get('Repartidor')))
 
                     DPI = datos.get('DPI')
                     Nombre = datos.get('Nombre')

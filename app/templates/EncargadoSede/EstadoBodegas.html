@@ -1,0 +1,82 @@
+{% extends 'PaginaEncargadoSede.html'%}
+{% load staticfiles %}
+
+{% block contenido %}
+
+
+<body>
+      <header id="header" class="clear">
+        <div id="hgroup">
+            <h1><a href="#">Modificar estado de bodega</a></h1>
+        </div>
+        
+    
+      </header>
+    
+    
+    <!-- content -->
+    <div class="wrapper row2">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+          
+            {% for field in form %}
+          
+              <div class="field">
+                {{ field.label_tag }} </br>
+                {{ field }}
+          
+                {% if field.errors %}
+                  {% for error in field.errors %}
+                  <p>
+                    {{ field.errors }}
+                  </p>
+                  {% endfor %}
+                {% endif %}
+          
+              </div>
+            {% endfor %}
+
+            <p class="center-content">
+              <input type="submit" class="btn btn-green" value="ASIGNAR ESTADO">
+            </p>
+
+          </form>
+    </div>
+
+
+    <div class="col-sm-6">
+      <section class="panel">
+        <header class="panel-heading">
+          Bodegas
+        </header>
+        <table class="table table-striped">
+          <thead>
+            <tr>            
+              <th>Nombre</th> 
+              <th>Direccion</th> 
+              <th>Estado</th> 
+              <th>Encargado</th>        
+            </tr>
+          </thead>
+          <tbody>
+          {% for bod in bodegas %}
+          <tr>
+              <td>{{bod.nombre}}</td>
+              <td>{{bod.direccion}}</td>
+              <td>{{bod.estado}}</td>
+              <td>{{bod.encargado_dpi.correo}}</td>
+          </tr>
+          {%endfor%}
+          </tbody>                    
+        </table>
+      </section>
+</div>
+
+
+
+
+
+
+    </body>
+
+{% endblock %}
